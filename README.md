@@ -1,3 +1,6 @@
+Initial project was developed incollaboration with [Fernando Arce](https://github.com/FerAC) as homework for a software engineering course.
+
+
 # Evaluación técnica 2.
 
 ## Entregables
