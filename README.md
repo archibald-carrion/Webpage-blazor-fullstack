@@ -1,4 +1,4 @@
-Initial project was developed incollaboration with [Fernando Arce](https://github.com/FerAC) as homework for a software engineering course.
+Initial project was developed in collaboration with [Fernando Arce](https://github.com/FerAC) as homework for a software engineering course.
 
 
 # Evaluación técnica 2.
