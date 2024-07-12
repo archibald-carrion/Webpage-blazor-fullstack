@@ -1,0 +1,7 @@
+Evaluación Técnica 2
+link de repositorio: https://github.com/UCR-PI-IS/evaluacion-tecnica-1-archibald-carrion
+hash de inicio: ae2c366f7bcfe970b973856d9d7c0b2de97ca40a
+hash de fin: 
+
+repartir 100% entre los desarrolladores según su aporte:
+autores: Archibald Emmanuel Carrion Claeys, C01736: 100%

@@ -1,0 +1,182 @@
+﻿@page "/createCareer"
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Application.Services
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Application.Services.Interfaces
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Domain.Career.Entities;
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Domain.Career.ValueObjects;
+@using Newtonsoft.Json
+@inject NavigationManager NavigationManager
+@inject ICreateCareerService createCareerService;
+@inject IListCareerService careerService;
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+<link href="css/createcareer.css" rel="stylesheet" />
+
+<div style="margin-left: 20px;">
+    <h1 style="color: #0C344E;">Crear Carrera <br /></h1>
+    <EditForm Model="@career" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+
+        <!-- HTML snippet for the Career name and acronym -->
+        <div class="input-group">
+            <!-- read career name from user -->
+            <div class="name_container">
+                <h4>Nombre</h4>
+                <InputText id="name" class="input_name" @bind-Value="career.Name" />
+                <ValidationMessage For="@(() => career.Name)" />
+            </div>
+
+            <!-- read acronym from user -->
+            <div class="acronym_container">
+                <h4>Acrónimo</h4>
+                <InputText id="acronym" class="input_acronym" @bind-Value="career.Acronym" />
+                <ValidationMessage For="@(() => career.Acronym)" />
+            </div>
+        </div>
+
+        <!-- HTML snippet for the Career description -->
+        <h4><br /> Descripción </h4>
+        <InputTextArea id="description" class="input_description" @bind-Value="career.Description" />
+        <ValidationMessage For="@(() => career.Description)" />
+
+        <!-- HTML snippet for the time quantity -->
+        <h4><br /> Cantidad de tiempo (años)</h4>
+        <InputNumber class="input_duration" @bind-Value="career.Duration" />
+        <ValidationMessage For="@(() => career.Duration)" />
+
+        <!-- HTML snippet for isSteamRelated -->
+        <!--  <h4><br /> ¿Es STEAM?</h4>-->
+        <!-- <InputCheckbox @bind-Value="career.isSteamRelated" />-->
+        <!-- <ValidationMessage For="@(() => career.isSteamRelated)" />-->
+        
+        <h4><br /> ¿Es STEAM?</h4>
+        <InputCheckbox @bind-Value="career.isSteamRelated" />
+        <label for="isSteam">Sí</label>
+        <ValidationMessage For="@(() => career.isSteamRelated)" />
+
+        <!-- HTML snippet for PercentageFemaleStudents -->
+        <h4><br /> Porcentaje de Mujeres Estudiantes</h4>
+        <InputNumber class="input_percentage" @bind-Value="career.PercentageFemaleStudents" />
+        <ValidationMessage For="@(() => career.PercentageFemaleStudents)" />
+
+        <!-- HTML snippet for isECCI -->
+        <h4><br /> ¿Es relacionado con computación e informática?</h4>
+        <InputCheckbox @bind-Value="career.isECCI" />
+        <ValidationMessage For="@(() => career.isECCI)" />
+
+        <!-- HTML snippet for the submit button -->
+        <div class="btn-container">
+            <button type="submit" class="btn btn-primary btn_send"><h4> Crear </h4></button>
+        </div>
+
+        <!-- HTML snippet for the error modal -->
+        @if (show_error)
+        {
+            <div class="modal-container">
+                <div class="modal-content">
+                    <h2>Ha habido un error</h2>
+                    <p>Ya existe una carrera con ese acrónimo</p>
+                    <button @onclick="ToggleModal" class="btn btn-danger">Cerrar</button>
+                </div>
+            </div>
+        }
+    </EditForm>
+</div>
+
+@code {
+    private CareerModel career = new CareerModel();
+    private IEnumerable<Career>? Elements = new List<Career>();
+    private List<string> Acronyms = new List<string>();
+    private bool show_error = false;
+
+    /// <summary>
+    /// On initialized async method
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        Elements = await careerService.GetCareersAsync();
+    }
+
+    /// <summary>
+    /// Toggle modal is used to show the error modal to the user
+    /// </summary>
+    private void ToggleModal()
+    {
+        show_error = !show_error;
+    }
+
+    /// <summary>
+    /// Handle valid submit
+    /// </summary>
+    private void HandleValidSubmit()
+    {
+        Acronyms = GetCareerAcronyms(Elements);
+        if (Acronyms.Contains(career.Acronym))
+        {
+            show_error = true;
+            StateHasChanged();
+            return;
+        }
+        else
+        {
+            // print the boolena vlaue to check theey where correctly written
+            Console.WriteLine(career.isSteamRelated);
+            Console.WriteLine(career.isECCI);
+            // We divide the percentage by 100 because the input is a number between 0 and 100 but we need a number between 0 and 1
+            career.PercentageFemaleStudents = career.PercentageFemaleStudents / 100;
+            var jsonContent = JsonConvert.SerializeObject(career, Formatting.Indented);
+            createCareerService.PostCreateCareerAsync(jsonContent);
+            NavigationManager.NavigateTo($"/careers");
+        }
+    }
+
+    /// <summary>
+    /// Get career acronyms list all the acronyms of the careers in the database
+    /// </summary>
+    /// <param name="elements"></param>
+    /// <returns></returns>
+    public static List<string> GetCareerAcronyms(IEnumerable<Career>? elements)
+    {
+        // if elements is null we return an empty list
+        if (elements == null)
+        {
+            return new List<string>();
+        }
+
+        // We convert elements to a list of acronyms
+        return elements.Select(c => c.Acronym.Value).ToList();
+    }
+
+    /// <summary>
+    /// Career model is the class that represents the career model
+    /// </summary>
+    public class CareerModel
+    {
+        [Required(ErrorMessage = "El acrónimo es un espacio requerido.")]
+        [MaxLength(3, ErrorMessage = "El acrónimo debe tener como máximo 3 caracteres.")]
+        public string Acronym { get; set; }
+
+        [Required(ErrorMessage = "La descripción es requerida.")]
+        public string Description { get; set; }
+
+        [Required(ErrorMessage = "El nombre es requerido.")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "La duración es requerida.")]
+        [Range(1, int.MaxValue, ErrorMessage = "La duración debe ser mayor a 1.")]
+        public int Duration { get; set; }
+
+        [Required(ErrorMessage = "Debe indicar si la carrera es STEAM o no.")]
+        public bool isSteamRelated { get; set; }
+
+        [Required(ErrorMessage = "Debe indicar si el porcentaje de mujeres en la carrera.")]
+        [Range(0, 100, ErrorMessage = "El porcentaje debe estar entre 0 y 100.")]
+        public double PercentageFemaleStudents { get; set; }
+
+        [Required(ErrorMessage = "Debe indicar si la carrera es relacionada con computación e informática.")]
+        public bool isECCI { get; set; }
+    }
+}

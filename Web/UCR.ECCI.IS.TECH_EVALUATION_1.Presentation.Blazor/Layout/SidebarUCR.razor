@@ -1,0 +1,131 @@
+﻿
+﻿@using BlazorStrap
+<div class="UCR_sidebar @(_isActive ? "active" : "")">
+    <div class="top">
+        <div class="logo">
+            <span>Menú Principal</span>
+        </div>
+        <i class="bx bx-chevrons-left" id="btn" @onclick="ToggleSidebar"></i>
+    </div>
+    
+    <ul>
+        <li>
+            <div class="temporal-content">
+                <a href="createCareer">
+                    <i class='bx bx-book-open'></i>
+                    <span class="nav-item">Interacción</span>
+                </a>
+            </div>
+            <div class="careers_container_sidebar">
+                <BSDropdown class="dropdown-button">
+                    <Toggler>
+                        <BSToggle IsButton="true" class="custom-dropdown">
+                            <i class='bx bx-book-open'></i>
+                            <span class="nav-item">Carreras</span>
+                        </BSToggle>
+                    </Toggler>
+                    <Content>
+                        <a href="createCareer">Crear</a>
+                        <a href="careers">Listar</a>
+                    </Content>
+                </BSDropdown>
+
+            </div>
+            @* <div class="temporal-content">
+                <a href="list-learningspaces">
+                    <i class='bx bx-cube'></i>
+                    <span class="nav-item">Interacción</span>
+                </a>
+            </div>
+            <BSDropdown class="dropdown-button">
+                <Toggler>
+                    <BSToggle IsButton="true" class="custom-dropdown">
+                        <i class='bx bx-cube'></i>
+                        <span class="nav-item">Espacios</span>
+                    </BSToggle>
+                </Toggler>
+                <Content>
+                    <a href="create-learningspaces">Crear Espacios de Aprendizaje</a>
+                    <a href="list-learningspaces">Listar Espacios de aprendizaje</a>
+                </Content>
+            </BSDropdown> *@
+        </li>
+        <li>
+            @* <div class="temporal-content">
+                <a href="Weather">
+                    <i class='bx bxs-buildings'></i>
+                    <span class="nav-item">Interacción</span>
+                </a>
+            </div>
+            <BSDropdown class="dropdown-button">
+                <Toggler>
+                    <BSToggle IsButton="true" class="custom-dropdown">
+                        <i class='bx bxs-buildings'></i>
+                        <span class="nav-item">Zonas</span>
+                    </BSToggle>
+                </Toggler>
+                <Content>
+                    <a href="CreateBuilding">Crear Edificios</a>
+                    <a href="list-buildings">Listar Edificios</a>
+                </Content>
+            </BSDropdown> *@
+        </li>
+        <li>
+            @* <BSDropdown class="dropdown-button">
+                <Toggler>
+                    <BSToggle IsButton="true" class="custom-dropdown">
+                        <i class='bx bx-chalkboard'></i>
+                        <span class="nav-item">Componentes</span>
+                    </BSToggle>
+                </Toggler>
+                <Content>
+                    <a href="/create-lcomponent">Crear Componentes de aprendizaje</a>
+                    <a href="/list-lcomponent">Listar Componentes de aprendizaje</a>
+                </Content>
+            </BSDropdown> *@
+        </li>
+
+        <li>
+            @* <div class="temporal-content">
+                <a href="Weather">
+                    <i class='bx bx-user'></i>
+                    <span class="nav-item">Interacción</span>
+                </a>
+            </div>
+            <BSDropdown class="dropdown-button">
+                <Toggler>
+                    <BSToggle IsButton="true" class="custom-dropdown">
+                        <i class='bx bx-user'></i>
+                        <span class="nav-item">Interacción</span>
+                    </BSToggle>
+                </Toggler>
+                <Content>
+                    <a href="Login">Iniciar sesion</a>
+                    <a href="ShowActiveUsers">Usuarios activos</a>
+                </Content>
+            </BSDropdown> *@
+        </li>
+    </ul>
+    <div class="logo_container">
+        <img src="assets/posible_Logo_2.png" alt="Logo UCR Theme Park" class="imagen_logo">
+    </div>
+</div>
+
+
+@code {
+
+    private bool _isActive;
+
+    private void ToggleSidebar()
+    {
+        if (_isActive)
+        {
+            _isActive = false;
+        }
+        else
+        {
+            _isActive = true;
+        }
+
+    }
+}

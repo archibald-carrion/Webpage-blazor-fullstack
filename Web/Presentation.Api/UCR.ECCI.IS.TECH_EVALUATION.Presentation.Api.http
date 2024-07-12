@@ -1,0 +1,6 @@
+@UCR.ECCI.IS.TECH_EVALUATION.Presentation.Api_HostAddress = http://localhost:5139
+
+GET {{UCR.ECCI.IS.TECH_EVALUATION.Presentation.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

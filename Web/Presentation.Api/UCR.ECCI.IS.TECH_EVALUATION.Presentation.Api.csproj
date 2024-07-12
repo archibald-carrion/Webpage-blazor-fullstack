@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>742ad9c5-9de5-44dd-a9bb-dfce1f7d17ab</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\UCR.ECCI.IS.TECH_EVALUATION_1.Application.csproj" />
+    <ProjectReference Include="..\BackendDependencyInjection\UCR.ECCI.IS.TECH_EVALUATION_1.BackendDependencyInjection.csproj" />
+    <ProjectReference Include="..\Domain\UCR.ECCI.IS.TECH_EVALUATION_1.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

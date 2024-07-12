@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\UCR.ECCI.IS.TECH_EVALUATION_1.Domain.csproj" />
+  </ItemGroup>
+	
+	<ItemGroup>
+		<InternalsVisibleTo Include="UCR.ECCI.IS.TECH_EVALUATION_1.Application.Tests.Unit" />
+		<InternalsVisibleTo Include="UCR.ECCI.IS.TECH_EVALUATION_1.Application.Tests.Integration" />
+	</ItemGroup>
+
+</Project>

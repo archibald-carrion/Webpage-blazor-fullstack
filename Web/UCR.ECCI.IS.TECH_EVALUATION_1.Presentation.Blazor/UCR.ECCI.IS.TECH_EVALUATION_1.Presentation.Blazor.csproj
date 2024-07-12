@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BlazorStrap" Version="5.1.102.51923" />
+    <PackageReference Include="BlazorStrap.V5" Version="5.1.102.51723" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.4" PrivateAssets="all" />
+    <PackageReference Include="MudBlazor" Version="6.19.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\UCR.ECCI.IS.TECH_EVALUATION_1.Application.csproj" />
+    <ProjectReference Include="..\Domain\UCR.ECCI.IS.TECH_EVALUATION_1.Domain.csproj" />
+    <ProjectReference Include="..\FrontendDependencyInjection\UCR.ECCI.IS.TECH_EVALUATION_1.FrontendDependencyInjection.csproj" />
+    <ProjectReference Include="..\Infrastructure.ApiClient\UCR.ECCI.IS.TECH_EVALUATION_1.Infrastructure.ApiClient.csproj" />
+  </ItemGroup>
+
+</Project>

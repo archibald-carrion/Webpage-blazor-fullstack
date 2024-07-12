@@ -1,0 +1,119 @@
+﻿body {
+}
+
+.input_name{
+    padding: 10px;
+    margin-top: 10px;
+    width: 16rem;
+    height: 3rem;
+    background-color: #ffffff;
+    border: solid 1px #ccc;
+}
+
+.input_acronym {
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 10rem;
+    height: 3rem;
+    background-color: #ffffff;
+    border: solid 1px #ccc;
+}
+
+.input_description {
+    padding: 10px;
+    margin-top: 10px;
+    width: 30rem;
+    height: 13rem;
+    background-color: #ffffff;
+    border: solid 1px #ccc;
+}
+
+
+.input_duration {
+    padding: 10px;
+    margin-top: 10px;
+    width: 8rem;
+    height: 3rem;
+    background-color: #ffffff;
+    border: solid 1px #ccc;
+}
+
+.btn_send {
+    
+    margin-top: 20px;
+    height: 3rem;
+    width: 6rem;
+    background-color: #2980B9;
+}
+
+.btn_container {
+    position: relative;
+    right: 8.3rem;
+    top: 7rem;
+}
+
+
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    margin-left: 200px;
+    width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.UCR_sidebar ul li a i {
+    min-width: 3.125rem;
+    text-align: center;
+    position: relative;
+    left: 25px;
+    height: 50px;
+    border-radius: 12px;
+    line-height: 3.125rem;
+    font-size: 1.6rem;
+}
+
+.UCR_sidebar.active .custom-dropdown {
+    display: contents;
+    position: relative;
+    left: 22rem;
+    background-color: #0C344E;
+    color: #ffff;
+}
+
+.custom-dropdown {
+    display: none;
+    position: relative;
+    left: 22rem;
+    background-color: #0C344E;
+    color: #ffff;
+}
+
+.dropdown-button {
+    position: absolute;
+    right: 400px;
+    background-color: #24485f;
+    text-decoration: none;
+}
+
+.careers_container_sidebar {
+    padding: 10px;
+    text-align: center;
+    align-content: center;
+    position: relative;
+    left: 5px;
+}

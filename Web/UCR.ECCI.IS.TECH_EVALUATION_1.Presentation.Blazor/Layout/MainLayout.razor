@@ -1,0 +1,101 @@
+﻿﻿@using BlazorStrap
+@using MudBlazor
+@inherits LayoutComponentBase
+
+
+<div class="page">
+    <div class="cintillo_ucr">
+        <img src="assets/firma-tipografica-una-linea-blanco.png" alt="Firma tipografica UCR" class="firma_ucr">
+        <BSButtonGroup DropdownPlacement="BlazorStrap.Placement.BottomEnd" class="dropdown-user">
+            <BSDropdown Offset ="50,64">
+                <Toggler>
+                    <BSToggle IsButton="false">
+                        <div class="user">
+                            <img src="assets/perro_graduado.jpg" alt="foto usuario" class="user-img">
+                            <div class="nombre_usuario">
+                                <p class="bold">Fernando Arce</p>
+
+                                <p>User</p>
+                            </div>
+                        </div>
+                </BSToggle></Toggler>
+                <Content>
+                    <BSDropdownItem>Action</BSDropdownItem>
+                    <BSDropdownItem>Another action</BSDropdownItem>
+                    <BSDropdownItem>Something else here</BSDropdownItem>
+                </Content>
+            </BSDropdown>
+        </BSButtonGroup>
+    </div>
+    <SidebarUCR />
+    <div class="main-content">
+        @Body
+        <div class="UCR-Footer">
+            <img src="assets/firma-vertical-dos-lineas-blanco.png" alt="Firma tipografica UCR" class="logo-UCR-Footer">
+            <div class="contact-info-bar">
+                <h1>© Escuela de Ciencias de la Computación e Informática 2024 - Tel. 2511-8000.</h1>
+            </div>
+            <img src="assets/sinaes-carrera-acreditada.png" alt="Carrera acreditada SINAES" class="SINAES-Footer" />
+            <div class="container-Footer-Entities">
+                <h1 class="Footer-Title"> Entidades </h1>
+                <li>
+                    <a href="https://www.facebook.com/aecci.ucr/"> AECCI </a>
+                </li>
+                <li>
+                    <a href="http://www.pci.ucr.ac.cr/"> PPCI </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/paacc.ucr"> PAACC </a>
+                </li>
+                <li>
+                    <a href="http://www.citic.ucr.ac.cr/"> CITIC </a>
+                </li>
+            </div>
+            <div class="container-Footer-Services"> 
+                <h1 class="Footer-Title"> Servicios </h1>
+                <li>
+                    <a href="https://tiquetes.ecci.ucr.ac.cr/"> Tiquetes de servicio </a>
+                </li>
+                <li>
+                    <a href="https://set.ecci.ucr.ac.cr/webmail/"> Correo web </a>
+                </li>
+                <li>
+                    <a href="https://plataforma.ecci.ucr.ac.cr/"> Plataforma educativa </a>
+                </li>
+                <li>
+                    <a href="https://ematricula.ucr.ac.cr/"> eMatrícula </a>
+                </li>
+                <li>
+                    <a href="http://aka.ms/devtoolsforteaching"> Descarga de software</a>
+                </li>
+            </div>
+            <div class="container-Footer-Links"> 
+                <h1 class="Footer-Title"> Enlaces de interés </h1>
+                <li>
+                    <a href="https://fb.me/ComputacionUCR/"> Facebook </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/computacion.ucr/"> Instagram </a>
+                </li>
+                <li>
+                    <a href="http://fing.ucr.ac.cr/"> Facultad de Ingeniería </a>
+                </li>
+                <li>
+                    <a href="http://ori.ucr.ac.cr/"> Oficina de Registro </a>
+                </li>
+                <li>
+                    <a href="http://www.cu.ucr.ac.cr/normativa/"> Normativa (CU) </a>
+                </li>
+                <li>
+                    <a href="https://accionsocial.ucr.ac.cr/matricula-de-tcu"> TCU (VAS) </a>
+                </li>
+            </div>
+
+        </div>
+    </div>
+</div>
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+

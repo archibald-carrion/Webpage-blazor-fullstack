@@ -1,0 +1,433 @@
+﻿﻿﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+.UCR_sidebar {
+    position: fixed;
+    top: 4.375rem;
+    left: 0;
+    height: 100vh;
+    width: 5rem;
+    background-color: #0C344E;
+    padding: 0.4rem 0.8rem;
+    transition: all 0.5s ease;
+}
+
+    .UCR_sidebar.active ~ .main-content {
+        left: 15.625rem;
+        width: calc(100% - 15.625rem);
+    }
+
+    .UCR_sidebar.active {
+        width: 15.625rem;
+    }
+
+.cintillo_ucr {
+    background-color: #41ADE7;
+    height: 4.375rem;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 300;
+}
+
+.dropdown-user {
+    position: relative;
+    left: 95%;
+    top: -1.25rem;
+}
+
+.firma_ucr {
+    position: absolute;
+    left: 1.9097%;
+    right: 70.3993%;
+    top: 16.0714%;
+    bottom: 16.0714%;
+    height: 2.96875rem;
+    width: 19.9375rem;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.logout {
+    position: absolute;
+    top: 80%;
+    left: 25%;
+    color: #fff;
+}
+
+    .logout i {
+        font-size: 1.6rem;
+        margin-right: 1rem;
+        vertical-align: middle;
+        background-color: #24485f;
+        border: 1px solid #667f8f;
+        border-radius: 0.5rem;
+        padding: 10px 10px 10px 5px;
+        cursor: pointer;
+        background-color: #24485f;
+    }
+
+    .logout span {
+        display: none;
+    }
+
+.UCR_sidebar.active .logout i {
+    border: 0px;
+    padding: 0px;
+}
+
+.UCR_sidebar.active .logout span {
+    display: contents;
+}
+
+.UCR_sidebar.active .logout {
+    padding: 10px 40px;
+    vertical-align: middle;
+    background-color: #24485f;
+    border: 1px solid #667f8f;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background-color: #24485f;
+    left: 5%;
+}
+
+.user {
+    position: absolute;
+    top: 70%;
+    left: 10.5px;
+    display: flex;
+    align-items: center;
+    margin: 0.3rem;
+    display: flex;
+}
+
+.user-img {
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: 1px solid #667f8f;
+}
+
+.imagen_logo {
+    position: absolute;
+    width: 6rem;
+    left: -0.5rem;
+    bottom: 45%;
+}
+
+.UCR_sidebar.active .imagen_logo {
+    width: 20rem;
+    left: -2.5rem;
+    top: 25rem;
+}
+
+.nombre_usuario {
+    display: none;
+}
+
+    .nombre_usuario p {
+        margin: 5px 5px;
+    }
+
+.UCR_sidebar.active .nombre_usuario {
+    display: block;
+}
+
+.user p {
+    color: #fff;
+    opacity: 1;
+    margin-left: 1rem;
+}
+
+.UCR_sidebar .top .logo {
+    color: #fff;
+    display: flex;
+    height: 3.125rem;
+    width: 100%;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.top .logo {
+    font-size: 1.5rem;
+}
+
+.UCR_sidebar.active .top .logo {
+    opacity: 1;
+    position: relative;
+    left: 6%;
+    bottom: -1rem;
+}
+
+.UCR_sidebar #btn {
+    position: absolute;
+    color: #ffff;
+    top: 1.5rem;
+    left: 50%;
+    font-size: 1.6rem;
+    line-height: 50px;
+    transform: translateX(-50%) rotateY(180deg);
+    cursor: pointer;
+}
+
+    .UCR_sidebar #btn:hover {
+        color: #41ADE7;
+    }
+
+.UCR_sidebar.active #btn {
+    left: 85%;
+    transform: rotateY(360deg);
+}
+
+.UCR_sidebar ul li {
+    position: relative;
+    left: -1.8rem;
+    list-style: none;
+    height: 3.125rem;
+    width: 90%;
+    padding-top: 1.5rem;
+    margin: 0.8rem auto;
+    line-height: 3.125rem;
+}
+
+    .UCR_sidebar ul li a {
+        color: #fff;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 0.8rem;
+    }
+
+        .UCR_sidebar ul li a:hover {
+            color: #41ADE7;
+        }
+
+        .UCR_sidebar ul li a i {
+            min-width: 3.125rem;
+            text-align: center;
+            height: 50px;
+            border-radius: 12px;
+            line-height: 3.125rem;
+            font-size: 1.6rem;
+        }
+
+.UCR_sidebar.active ul li a i {
+    text-align: left;
+}
+
+.UCR_sidebar .nav-item {
+    opacity: 0;
+}
+
+.UCR_sidebar.active .nav-item {
+    opacity: 1;
+}
+
+.UCR_sidebar ul li .tooltip {
+    position: absolute;
+    left: 125px;
+    top: 100%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0.5rem 0.8rem rgba(0,0,0,0.2);
+    border-radius: .6rem;
+    padding: .4rem 1.2rem;
+    line-height: 1.8rem;
+    z-index: 11;
+    opacity: 0;
+}
+
+.UCR_sidebar ul li:hover .tooltip {
+    opacity: 1;
+}
+
+.UCR_sidebar.active ul li .tooltip {
+    opacity: 0;
+}
+
+.UCR-Footer {
+    display: grid;
+    gap: 1rem;
+    position: absolute;
+    background-color: #100c0c;
+    height: 20rem;
+    max-height: 20rem;
+    width: 100%;
+    bottom: calc(-25rem + 1rem);
+    left: -0.01rem;
+    z-index: 11;
+}
+
+    .UCR-Footer li {
+        list-style: none;
+        padding-top: 0.5rem;
+    }
+
+        .UCR-Footer li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.875rem;
+        }
+
+.contact-info-bar {
+    position: relative;
+    background-color: #666666;
+    color: #fff;
+    height: 5rem;
+    top: 100%;
+    text-align: center;
+}
+
+    .contact-info-bar h1 {
+        position: relative;
+        top: 25%;
+        padding: 1rem;
+        font-size: 1rem;
+    }
+
+.logo-UCR-Footer {
+    top: 15%;
+    position: absolute;
+    height: 11.25rem;
+    left: 15%;
+}
+
+.SINAES-Footer {
+    position: absolute;
+    top: 25%;
+    left: 80%;
+}
+
+.Footer-Title {
+    position: relative;
+    top: 0;
+    color: #FFDD00;
+    font-size: 20px;
+    font-weight: 1;
+}
+
+.container-Footer-Entities {
+    position: absolute;
+    top: 5rem;
+    left: 30%;
+}
+
+.container-Footer-Services {
+    position: absolute;
+    top: 5rem;
+    left: 47%;
+}
+
+.container-Footer-Links {
+    position: absolute;
+    top: 5rem;
+    left: 65%;
+}
+
+.main-content {
+    font-size: 1rem;
+    position: relative;
+    background-color: #ffffff;
+    top: 4.375rem;
+    left: 5rem;
+    transition: all 0.5s ease;
+    width: calc(100% - 5rem);
+    min-height: 100vh;
+    padding: 1rem;
+    z-index: 11;
+}
+
+
+.dropdown-button {
+    background-color: #24485f;
+    text-decoration: none;
+    border: 0.2rem solid #667f8f;
+    padding-left: 1.5rem;
+}
+
+.UCR_sidebar.active .custom-dropdown {
+    display: contents;
+    position: relative;
+    left: -0.9rem;
+    background-color: #0C344E;
+    color: #ffff;
+}
+
+.custom-dropdown {
+    display: none;
+    position: relative;
+    left: -0.1rem;
+    background-color: #0C344E;
+    color: #ffff;
+}
+
+    .custom-dropdown:hover i,
+    .custom-dropdown:hover .nav-item {
+        color: #41ADE7;
+    }
+
+    .custom-dropdown i {
+        font-size: 1.6rem;
+    }
+
+
+    .custom-dropdown .nav-item {
+        position: relative;
+        padding: 1.3rem;
+        top: -0.3rem;
+    }
+
+.temporal-content {
+    display: contents;
+}
+
+.UCR_sidebar.active .temporal-content {
+    display: none;
+}
+
+.header.modal {
+    background-color: #95B60A;
+}
+
+@media (max-height: 50rem) {
+    .UCR-Footer {
+        position: absolute;
+        background-color: #100c0c;
+        height: 20rem;
+        max-height: 15rem;
+        width: 100%;
+        bottom: calc(-25rem + 1rem);
+        left: -0.01rem;
+    }
+
+    .container-Footer-Entities {
+        position: absolute;
+        top: 1rem;
+        left: 30%;
+    }
+
+    .container-Footer-Services {
+        position: absolute;
+        top: 1rem;
+        left: 47%;
+    }
+
+    .container-Footer-Links {
+        position: absolute;
+        top: 1rem;
+        left: 65%;
+    }
+}

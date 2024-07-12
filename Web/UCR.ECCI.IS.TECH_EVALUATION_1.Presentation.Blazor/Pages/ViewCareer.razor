@@ -1,0 +1,292 @@
+﻿@page "/view-career"
+@using System.Text
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Application.Services
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Application.Services.Interfaces
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Domain.Career.Entities
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Domain.Career.ValueObjects
+@using System.ComponentModel.DataAnnotations
+@using MudBlazor
+@using Newtonsoft.Json
+@inject NavigationManager NavigationManager
+@inject IListContentsService contentsService
+@inject ICreateContentService createContentService
+@inject IJSRuntime JS
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+<link href="css/createlearningspace.css" rel="stylesheet" />
+<link href="css/createcareer.css" rel="stylesheet" />
+
+<h2 style="color:#0C344E;  margin: 10px;">Carrera <span style="color:#0C344E;  margin: 150px;"> Acrónimo </span></h2>
+<h5 style="margin: 10px;  padding: 20px; padding-left: 0">
+    <span style="border: solid 1px #ccc; padding: 20px; width: 8rem;  border-radius: 0.5rem;">@career.Name.Value </span>
+    <span style="margin: 118px; border: solid 1px #ccc; padding: 20px; width: 8rem;  border-radius: 0.5rem;">@career.Acronym.Value </span>
+</h5>
+<h3 style="color:#0C344E;  margin: 10px;">Descripcion:</h3>
+<h5 style="margin: 10px; border: solid 1px #ccc; padding: 20px; width: 40rem;  border-radius: 0.5rem;">@((MarkupString)career.Description.Value.Replace("\n", "<br>"))</h5>
+<h3 style="color:#0C344E;  margin: 10px;">Duración en años</h3>
+<h5 style=" border: solid 1px #ccc; padding: 20px; width: 5rem;  border-radius: 0.5rem; margin: 10px;">@career.Duration</h5>
+<h3 style="color:#0C344E;  margin: 10px;">Contenidos: <br /></h3>
+
+
+<MudButton Variant="Variant.Filled" Style="margin: 10px;" Color="Color.Default" OnClick="ToggleModal">Agregar</MudButton>
+@if (Elements == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <MudExpansionPanels Style="margin: 10px;">
+        @foreach (var content in Elements)
+        {
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <span>@content.ContentName.Value</span>
+                        <div>
+                            <MudChip Color="Color.Primary" Size="MudBlazor.Size.Small">@content.ContentType.Value.ToString()</MudChip>
+                            <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="MudBlazor.Size.Small" OnClick="@(() => OpenModifyModal(content))" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="MudBlazor.Size.Small" OnClick="@(() => DeleteContent(content.Id))" />
+                        </div>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <p>@((MarkupString)content.Description.Value.Replace("\n", "<br>"))</p>
+                </ChildContent>
+            </MudExpansionPanel>
+        }
+    </MudExpansionPanels>
+}
+
+    @if (show_modal)
+    {
+        <div class="modal-container">
+            <div class="modal-content">
+                <button @onclick="ToggleModal" class="btn-close" style="margin-left: 90%; margin-bottom: 10px;"></button>
+
+                <h2 style="color:#0C344E;">@(isModifying ? "Modificar" : "Crear") Contenido</h2>
+                <EditForm Model="@newContent" OnValidSubmit="@(isModifying ? ModifyContent : CreateContent)">
+                    <DataAnnotationsValidator />
+
+                    <MudItem>
+                        <MudCard>
+                            <MudCardContent>
+                                <MudTextField Label="Nombre del contenido" HelperText="Max. 20 caracteres"
+                                              @bind-Value="ContentName" />
+                                <MudTextField T="string" Label="Descripcion" Variant="Variant.Outlined"
+                                              HelperText="Max. 254 caracteres" Lines="3" @bind-Value="Description" />
+
+                                <MudSelect T="string" Label="Tipo de Contenido" @bind-Value="newContent.ContentType">
+                                    <MudSelectItem Value="@("tecnológico")">Tecnológico</MudSelectItem>
+                                    <MudSelectItem Value="@("ambiental")">Ambiental</MudSelectItem>
+                                    <MudSelectItem Value="@("social")">Social</MudSelectItem>
+                                    <MudSelectItem Value="@("otros")">Otros</MudSelectItem>
+                                </MudSelect>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+
+                    <MudItem>
+                        <MudText Typo="Typo.body2" Align="Align.Center">
+                            Llena los campos correctamente para poder @(isModifying ? "modificar" : "crear") el contenido.
+                        </MudText>
+                    </MudItem>
+
+                    @if (contentValid)
+                    {
+                        <MudButton Variant="Variant.Filled" Disabled="false" OnClick="@(isModifying ? ModifyContent : CreateContent)">
+                            @(isModifying ? "Modificar" : "Agregar") Contenido
+                        </MudButton>
+                    }
+                    else
+                    {
+                        <MudButton Variant="Variant.Filled" Disabled="true">
+                            @(isModifying ? "Modificar" : "Agregar") Contenido
+                        </MudButton>
+                    }
+                </EditForm>
+            </div>
+        </div>
+    }
+
+@code {
+    private Career career;
+    CreatedContent newContent = new CreatedContent();
+    private IEnumerable<Contents>? Elements;
+    MudMessageBox mbox { get; set; }
+    private bool show_modal = false;
+    string salto = "asdasdas salto \n sadasdasd";
+    string salto2 => salto.Replace("\n", "<br>");
+    string content_rephrased;
+
+
+    // private void ToggleModal()
+    // {
+    //     show_modal = !show_modal;
+    // }
+
+    protected override async Task OnInitializedAsync()
+    {
+        newContent = new CreatedContent();
+        base.OnInitialized();
+        var uri = new Uri(NavigationManager.Uri);
+        var careerJson = uri.Query.Replace("?career=", "");
+        var decodedCareerJson = Uri.UnescapeDataString(careerJson);
+        career = System.Text.Json.JsonSerializer.Deserialize<Career>(decodedCareerJson);
+        Elements = await contentsService.GetContentsAsync(career.Acronym.Value);
+    }
+
+    private async void OnButtonClicked()
+    {
+        await mbox.Show();
+    }
+
+    private async Task CreateContent()
+    {
+        if (contentValid)
+        {
+            newContent.CareerAcronym = career.Acronym.Value;
+            newContent.ContentName = ContentName;
+            newContent.Description = Description;
+            // newContent.ContentType = ContentType;
+            var jsonContent = JsonConvert.SerializeObject(newContent, Formatting.Indented);
+            Console.WriteLine(jsonContent);
+            await createContentService.PostCreateContentAsync(jsonContent);
+            var uri = NavigationManager.Uri;
+            NavigationManager.NavigateTo(uri, forceLoad: true);
+        }
+    }
+
+    public class CreatedContent
+    {
+        public Guid Id { get; set; }  // Add this line
+
+        [Required]
+        [StringLength(20, ErrorMessage = "El nombre del contenido tiene un tamaño máximo de 20 caracteres.")]
+        public string ContentName { get; set; }
+
+        [Required]
+        [StringLength(254, ErrorMessage = "La descripción tiene un tamaño máximo de 254 caracteres.")]
+        public string Description { get; set; }
+
+        public string CareerAcronym { get; set; }
+
+        [Required(ErrorMessage = "El tipo de contenido es requerido.")]
+        public string ContentType { get; set; }
+    }
+
+    public bool contentValid = false;
+    public bool ContentValid { 
+        get => contentValid;
+        set
+        {
+            if (contentValid != value)
+            {
+                contentValid = value;
+                StateHasChanged();
+            }
+        }
+    }
+    public bool condition1;
+    public bool condition2;
+    private string contentName;
+    private string description;
+
+
+
+    [Required]
+    [StringLength(8, ErrorMessage = "El nombre del contenido tiene un tamaño máximo de 8 caracteres.")]
+    public string ContentName
+    {
+        get => contentName;
+        set
+        {
+            contentName = value;
+            ValidateConditions();
+            StateHasChanged();
+        }
+    }
+
+    [Required]
+    [StringLength(254, ErrorMessage = "La descripción tiene un tamaño máximo de 254 caracteres.")]
+    public string Description
+    {
+        get => description;
+        set
+        {
+            description = value;
+            ValidateConditions();
+            StateHasChanged();
+        }
+    }
+
+    public string CareerAcronym { get; set; }
+
+    private void ValidateConditions()
+    {
+        condition1 = !string.IsNullOrEmpty(ContentName) && ContentName.Length <= 20;
+        condition2 = !string.IsNullOrEmpty(Description) && Description.Length <= 254;
+        var condition3 = !string.IsNullOrEmpty(newContent.ContentType);
+        contentValid = condition1 && condition2 && condition3;
+        if (contentValid)
+        {
+            Console.WriteLine("Contenido valido");
+            StateHasChanged();
+        }
+
+    }
+    private bool isModifying = false;
+    private Guid currentContentId;
+
+    private void OpenModifyModal(Contents content)
+    {
+        isModifying = true;
+        currentContentId = content.Id;
+        ContentName = content.ContentName.Value;
+        Description = content.Description.Value;
+        newContent.ContentType = content.ContentType.Value.ToString();
+        show_modal = true;
+    }
+
+    private async Task ModifyContent()
+    {
+        if (contentValid)
+        {
+            newContent.Id = currentContentId;
+            newContent.CareerAcronym = career.Acronym.Value;
+            newContent.ContentName = ContentName;
+            newContent.Description = Description;
+            var jsonContent = JsonConvert.SerializeObject(newContent, Formatting.Indented);
+            Console.WriteLine(jsonContent);
+            await createContentService.PostModifyContentAsync(jsonContent);
+            var uri = NavigationManager.Uri;
+            NavigationManager.NavigateTo(uri, forceLoad: true);
+        }
+    }
+
+    private async Task DeleteContent(Guid contentId)
+    {
+        Console.WriteLine("Deleting content with id: " + contentId);
+        await createContentService.DeleteContentAsync(contentId);
+        var uri = NavigationManager.Uri;
+        NavigationManager.NavigateTo(uri, forceLoad: true);
+    }
+
+    private void ToggleModal()
+    {
+        show_modal = !show_modal;
+        if (!show_modal)
+        {
+            isModifying = false;
+            ResetForm();
+        }
+    }
+
+    private void ResetForm()
+    {
+        newContent = new CreatedContent();
+        ContentName = string.Empty;
+        Description = string.Empty;
+        currentContentId = Guid.Empty;
+    }
+}

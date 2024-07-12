@@ -1,0 +1,140 @@
+﻿﻿body {
+    background-color: #ffffff;
+}
+
+.Title_CLS {
+    color: #0C344E;
+    font-size: 3rem;
+    position: relative;
+    left: 3rem;
+}
+
+.mb-3 {
+    display: block;
+    position: relative;
+    top: 5rem;
+    left: 3rem;
+    width: 20rem;
+}
+
+    .mb-3.active {
+        display: none;
+    }
+
+.mb-4 {
+    display: none;
+}
+
+    .mb-4.active {
+        display: block;
+        position: relative;
+        top: 5rem;
+        left: 3rem;
+        width: 20rem;
+    }
+
+.color-picker {
+    position: relative;
+    width: 100rem;
+    right: 9.65rem;
+}
+
+.spacing {
+    margin-bottom: 1rem;
+}
+
+.input-color {
+    margin-bottom: 1.25rem;
+    border-radius: 0.625rem;
+    width: 5rem;
+}
+
+.image-bg-1 {
+    position: absolute;
+    z-index: -1000;
+    top: -8rem;
+    left: 75%;
+    width: 700px;
+    overflow: hidden;
+}
+
+.image-bg-2 {
+    width: 500px;
+    position: absolute;
+    top: 40rem;
+    left: -9rem;
+    z-index: -1000;
+    overflow: hidden;
+}
+
+.next-button {
+    position: relative;
+    height: 60px;
+    left: 50rem;
+    top: -1rem;
+    width: 140px;
+    bottom: -6rem;
+    border-radius: 14px;
+    background-color: #2980B9;
+    border: 0;
+}
+.back-button {
+    position: relative;
+    height: 60px;
+    left: 0rem;
+    top: 10rem;
+    width: 140px;
+    bottom: -6rem;
+    border-radius: 14px;
+    background-color: #2980B9;
+    border: 0;
+}
+.create-LS-button {
+    position: relative;
+    left: 50rem;
+    top: 13rem;
+    background-color: #95B60A;
+    height: 60px;
+    width: 140px;
+    bottom: -6rem;
+    border-radius: 14px;
+    border: 0;
+}
+
+    .create-LS-button:hover {
+        background-color: #609000;
+    }
+
+.cancel-LS-button {
+    position: relative;
+    height: 60px;
+    left: 25rem;
+    top: 13rem;
+    width: 140px;
+    bottom: -6rem;
+    border-radius: 14px;
+    background-color: #FDB727;
+    border: 0;
+}
+
+    .cancel-LS-button:hover {
+        background-color: #EBA71C;
+    }
+
+
+.dropdown-CLS {
+    background-color: #FFFF;
+    width: 15rem;
+    text-align: left;
+    color: #999999;
+    border: solid 1px;
+    margin-bottom: 0.5rem;
+}
+
+.buttons_modal {
+    display: none;
+}
+
+    .buttons_modal.active {
+        display: block;
+    }

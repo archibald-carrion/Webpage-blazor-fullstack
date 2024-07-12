@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BlazorApp1</title>
+        <base href="/" />
+        <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/styles.css" />
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href="css/loadingPage.css" rel="stylesheet" />
+        <link rel="icon" type="image/png" href="favicon.png" />
+    </head>
+
+    <body>
+        <div id="app">
+            <!-- Loading page segment of the application -->
+            <div id="loading-page">
+                <div class="image-loading">
+                    <!-- We are using the perro_graduado for the loading image, but in further implementation we migth change it -->
+                    <img src="assets/perro_graduado.jpg" alt="Cargando aplicación..." style="width: 100%; height:100%; object-fit: fill; margin-bottom: auto" />
+                    <div class="loading-logo">
+                        <div class="loading-bar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+    <!-- loading necesary scripts to the page -->
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="_content/BlazorStrap/popper.min.js"></script>
+    <script src="_content/BlazorStrap/blazorstrap.js"></script>
+    <script src="_content/Microsoft.Authentication.WebAssembly.Msal/AuthenticationService.js"></script>
+
+</html>

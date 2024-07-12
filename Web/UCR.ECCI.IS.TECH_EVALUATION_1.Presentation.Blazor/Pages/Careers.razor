@@ -1,0 +1,109 @@
+﻿@page "/careers"
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Application.Services
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Application.Services.Interfaces
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Domain.Career.Entities
+@using UCR.ECCI.IS.TECH_EVALUATION_1.Domain.Career.ValueObjects
+@using MudBlazor
+@using System.Text.Json
+@inject NavigationManager NavigationManager
+@inject IListCareerService careerService
+@inject ICreateCareerService createCareerService
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+<link href="css/createlearningspace.css" rel="stylesheet" />
+<link href="css/createcareer.css" rel="stylesheet" />
+
+@if (Elements == null || !Elements.Any())
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <MudTable Items="@Elements" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" RowsPerPage="7" Filter="new Func<Career,bool>(FilterFunc1)" Style="top:20rem;">
+        <ToolBarContent>
+            <MudText Typo="Typo.h3" Style="color:#0C344E;">Carreras</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>Nombre</MudTh>
+            <MudTh>Acronimo</MudTh>
+            <MudTh>Duracion</MudTh>
+            <MudTh>Presupuesto de Beca</MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Nombre">@context.Name.Value</MudTd>
+            <MudTd DataLabel="Acronimo">@context.Acronym.Value</MudTd>
+            <MudTd DataLabel="Duracion">@context.Duration</MudTd>
+            <MudTd DataLabel="Presupuesto de Beca">
+                @Budgets[Elements.ToList().IndexOf(context)]
+            </MudTd>
+            <MudTd DataLabel="">
+                <MudIconButton Icon="@Icons.Material.Filled.Add" Style="@($"color:{Colors.Grey.Darken2};")" @onclick="@(e => viewCareer(context))"></MudIconButton>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager HideRowsPerPage />
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
+    private string searchString1 = "";
+    private List<Career> Elements = new List<Career>();
+    private List<double> Budgets = new List<double>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Elements = (await careerService.GetCareersAsync()).ToList();
+
+        Console.WriteLine("before retrieving budgets");
+
+        // Get the budget for each career using createCareerService.GetScholarshipBudgetAsync(string careerAcronym)
+        foreach (var career in Elements)
+        {
+            Console.WriteLine("retrieving budgets");
+            var budget = await createCareerService.GetScholarshipBudgetAsync(career.Acronym.Value);
+            Budgets.Add(budget);
+        }
+
+        Console.WriteLine("after retrieving budgets");
+
+        // Print the budget for each career
+        foreach (var budget in Budgets)
+        {
+            Console.WriteLine("print budgets");
+            Console.WriteLine(budget);
+        }
+
+        Console.WriteLine("after print budgets");
+    }
+
+    private void viewCareer(Career career)
+    {
+        Console.WriteLine("------------------------");
+        var jsonCareer = JsonSerializer.Serialize(career);
+        NavigationManager.NavigateTo($"/view-career?career={Uri.EscapeDataString(jsonCareer)}");
+    }
+
+    private bool FilterFunc1(Career element) => FilterFunc(element, searchString1);
+
+    private bool FilterFunc(Career element, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (element.Acronym.Value.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.Name.Value.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+}
